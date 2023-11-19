@@ -2,7 +2,7 @@ INCLUDE := -I ../include
 
 
 CFLAGS := -Og -ggdb -Wall -Wextra -fpic -MMD $(INCLUDE)
-LFLAGS := -lakrypt
+LFLAGS := -lakrypt -lm
 CC := clang
 
 ifeq ($(SANITIZE),y)

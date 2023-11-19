@@ -61,7 +61,7 @@ struct random_state *random_state_allocate(state_flags_t flags)
 
 void random_state_free(struct random_state *state)
 {
-	assert(state);
+	debug_assert(state);
 
 	ak_hash_destroy(&state->streebog);
 	free(state->mem);

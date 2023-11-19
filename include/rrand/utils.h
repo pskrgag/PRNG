@@ -6,23 +6,19 @@
 
 #ifdef DEBUG
 #define RAND_EXPORT 	__attribute__((visibility ("default")))
+#define debug_log(fmt, ...)	printf(fmt __VA_OPT(,) __VA_ARGS__)
+#define debug_assert(e)		assert(e)
 #else
 #define RAND_EXPORT
+#define debug_log(fmt, ...)	((void) fmt)
+#define debug_assert(e)		((void) (e))
 #endif
 
 static inline uint64_t get_nsec(void)
 {
-	uint64_t ns = 0;
-	struct timespec time;
-
-	if (clock_gettime(CLOCK_REALTIME, &time) == 0)
-	{
-		ns = time.tv_sec;
-		ns <<= 32;
-		ns |= time.tv_nsec;
-	}
-	
-	return ns;
+	unsigned hi, lo;
+	asm volatile ("rdtsc" : "=a"(lo), "=d"(hi));
+	return ((unsigned long long) lo) | (((unsigned long long) hi) << 32);
 }
 
 #endif
