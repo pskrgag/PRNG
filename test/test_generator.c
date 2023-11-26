@@ -12,7 +12,7 @@ int main(int argc, char **argv)
 {
 	struct random_state *state = random_state_allocate(30);
 	FILE *results;
-	size_t num_samples, i = 0;
+	size_t num_samples;
 
 	assert(state);
 
@@ -30,7 +30,7 @@ int main(int argc, char **argv)
 	printf("Sampling %zu raw bytes from memory noise source...\n", num_samples);
 
 	assert(random_get_bytes(state, res, num_samples) == 0);
-	assert(write(fileno(results), res, num_samples) == num_samples);
+	assert(write(fileno(results), res, num_samples) == (ssize_t) num_samples);
 
 	random_state_free(state);
 	free(res);
