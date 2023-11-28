@@ -1,7 +1,6 @@
 INCLUDE := -I ../include
 
-
-CFLAGS := -Og -ggdb -Wall -Wextra -fpic -MMD $(INCLUDE)
+CFLAGS := -Og -ggdb -Wall -Wextra -fpic -MMD $(INCLUDE) -DDEBUG
 LFLAGS := -lakrypt -lm
 CC := clang
 

@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <assert.h>
+#include <stdio.h>
 #include <string.h>
 #include <limits.h>
 
@@ -44,6 +45,7 @@ static int pmsb(uint16_t val)
 
 #define BIT_OUT(bit, out, count, max)					\
 	do {								\
+		debug_assert(bit < 2);					\
 		out[count / CHAR_BIT] |= ((bit) << (count % CHAR_BIT));	\
 		if (++count / CHAR_BIT == max)				\
 			return max;					\
@@ -61,7 +63,7 @@ size_t encode(const void *_in, size_t size, void *_out, size_t max_size)
 	const uint8_t *in = _in;
 	uint8_t *out = _out;
 
-	/* Otherwise there is not need. */
+	/* Otherwise it does not make sense. */
 	debug_assert(size >= max_size);
 
 	memset(out, 0x0, max_size);
@@ -129,12 +131,12 @@ size_t encode(const void *_in, size_t size, void *_out, size_t max_size)
 
 	uint8_t msb_l = pmsb(l);
 
+	printf("s = %d\n", s);
 	debug_assert(msb_l < 2);
-	s++;
 
 	BIT_OUT(msb_l, out, bits_cons, max_size);
 
-	for (i = 0; i < s; ++i) {
+	for (i = 0, s++; i < s; ++i) {
 		BIT_OUT(1 - msb_l, out, bits_cons, max_size);
 	}
 

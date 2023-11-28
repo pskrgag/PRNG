@@ -1,5 +1,6 @@
 INCLUDE = -I ../include
 LINK    = -L $(LIBRARY_DIR) -lrand
+CC := clang
 
 CFLAGS := -Og -ggdb -Wall -Wextra $(INCLUDE)
 
@@ -7,9 +8,10 @@ ifeq ($(SANITIZE),y)
 CFLAGS += -fsanitize=address -fsanitize=undefined
 endif
 
-TESTS := memory \
+TESTS := noise \
 	 coder \
-	 generator
+	 generator \
+	 noise_extracted
 
 EXE = $(patsubst %, $(BUILD_DIR)/test_%, $(TESTS))
 
