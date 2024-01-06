@@ -35,8 +35,7 @@ for i in data:
     f = open(i, "r")
     data = np.fromfile(f, dtype=np.uint8)
     plt.hist(data, label=os.path.basename(i), histtype='step')
-    test(data, i)
-
+    # test(data, i)
 
 plt.legend(loc='upper right')
 plt.show()

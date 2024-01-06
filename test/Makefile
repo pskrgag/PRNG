@@ -11,7 +11,8 @@ endif
 TESTS := noise \
 	 coder \
 	 generator \
-	 noise_extracted
+	 noise_extracted \
+	 speed \
 
 EXE = $(patsubst %, $(BUILD_DIR)/test_%, $(TESTS))
 

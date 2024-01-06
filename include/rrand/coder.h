@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 
-#define ENCODER_SCALE_COUNT	1.2f
+#define ENCODER_SCALE_COUNT	1.7f
 
 size_t encode(const void *in, size_t size, void *out, size_t max_size);
 

@@ -19,14 +19,7 @@ _Static_assert(SEED_LENGHT >= STREEBOG_OUTLEN_BYTES, "");
 struct random_state {
 	struct hash streebog;
 
-	struct {
-		uint8_t  C[SEED_LENGHT];
-		struct {
-			uint8_t  V[SEED_LENGHT];
-			uint8_t  pad;
-		};
-		uint64_t counter;
-	} state;
+	uint8_t internal_state[STREEBOG_OUTLEN_BYTES];
 
 	/* Noise sources. */
 

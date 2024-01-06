@@ -26,9 +26,15 @@ static inline uint64_t get_nsec(void)
 
 static inline void mfence(void)
 {
-	// Add memory constraint to force compiler to not
-	// move this intstruction
-	asm volatile ("mfence":::"memory");
+	long a, d, code = 0x80000000;
+
+	asm volatile("cpuid":"=a"(a),"=d"(d):"a"(code):"ecx","ebx");
+	asm volatile("cpuid":"=a"(a),"=d"(d):"a"(code):"ecx","ebx");
+	asm volatile("cpuid":"=a"(a),"=d"(d):"a"(code):"ecx","ebx");
+	asm volatile("cpuid":"=a"(a),"=d"(d):"a"(code):"ecx","ebx");
+	asm volatile("cpuid":"=a"(a),"=d"(d):"a"(code):"ecx","ebx");
+	asm volatile("cpuid":"=a"(a),"=d"(d):"a"(code):"ecx","ebx");
+	asm volatile("cpuid":"=a"(a),"=d"(d):"a"(code):"ecx","ebx");
 }
 #else
 # error "Your arch is not supported yet"

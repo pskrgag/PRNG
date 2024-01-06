@@ -14,7 +14,7 @@ void get_memory_noise(struct random_state *state, void *buf, size_t size);
 int main(int argc, char **argv)
 {
 	struct random_state *state = random_state_allocate(30);
-	FILE *results;
+	FILE *results, *f;
 	size_t num_samples;
 
 	assert(state);
@@ -24,6 +24,9 @@ int main(int argc, char **argv)
 
 	results = fopen(argv[1], "w");
 	assert(results);
+
+	f = fopen("/tmp/raw", "w");
+	assert(f);
 
 	num_samples = atol(argv[2]);
 	if (num_samples == 0)
@@ -35,6 +38,7 @@ int main(int argc, char **argv)
 	printf("Sampling %zu bytes of extracted noise...\n", num_samples);
 
 	get_memory_noise(state, res, num_samples * ENCODER_SCALE_COUNT);
+	assert(write(fileno(f), res, num_samples * ENCODER_SCALE_COUNT) == num_samples * ENCODER_SCALE_COUNT);
 
 	uint8_t *coder = calloc(num_samples, 1);
 	assert(coder);
